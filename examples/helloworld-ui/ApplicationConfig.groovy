@@ -1,0 +1,75 @@
+/*
+ * Copyright 2011-2014 the original author or authors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import org.springframework.context.annotation.*
+import org.springframework.core.type.*
+import org.springframework.data.redis.connection.jedis.*
+import org.springframework.session.data.redis.config.annotation.web.http.*
+import org.springframework.session.web.http.*
+import org.springframework.web.filter.*
+import org.springframework.boot.context.embedded.*
+
+@Grab("org.springframework.session:spring-session-data-redis:1.0.0.RELEASE")
+@Configuration
+class ApplicationConfig {
+  @Value("#{systemEnvironment['HELLOWORLDSERVICE_PORT']}")
+  String serviceEndpoint
+
+  @Bean
+  @Primary
+  def HelloWorldService helloWorldService() {
+    def uri
+
+    if (serviceEndpoint?.trim()) {
+      uri = serviceEndpoint.replace("tcp:", "http:") + "/hello"
+
+      println "Using backend: ${uri}"
+      return new RestHelloWorldService(uri: uri)
+    } else {
+      println "Using local backend"
+      return new LocalHelloWorldService()
+    }
+  }
+
+}
+
+@Configuration
+@EnableRedisHttpSession
+@Conditional(SessionReplicationCondition.class)
+class SessionReplicationConfig {
+  @Value("#{systemEnvironment['REDIS_PORT']}")
+  String redisEndpoint
+
+  @Bean
+  JedisConnectionFactory connectionFactory() {
+    def uri = new URI(redisEndpoint)
+    return new JedisConnectionFactory(hostName: uri.host, port: uri.port);
+  }
+
+  @Bean
+  @Order(value = 0)
+  FilterRegistrationBean sessionRepositoryFilterRegistration(
+      SessionRepositoryFilter filter) {
+    return new FilterRegistrationBean(
+       filter: new DelegatingFilterProxy(filter),
+       urlPatterns: ["/*"] as List);
+  }
+}
+
+class SessionReplicationCondition implements Condition {
+  public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+    return System.getenv("REDIS_PORT") != null
+  }
+}
