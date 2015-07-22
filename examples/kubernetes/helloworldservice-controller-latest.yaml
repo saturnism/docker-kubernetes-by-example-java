@@ -14,31 +14,30 @@
 # limitations under the License.
 ###############################################################################
 kind: ReplicationController
-apiVersion: v1beta1
-id: helloworldservice-controller-latest
-labels:
-  name: helloworldservice
-  version: latest
-  visualize: "true"
-desiredState:
-  replicas: 2
-  replicaSelector:
+apiVersion: v1
+metadata:
+  name: helloworldservice-controller-latest
+  labels:
     name: helloworldservice
     version: latest
-  podTemplate:
-    labels:
-      name: helloworldservice
-      version: latest
-      uses: redis
-      visualize: "true"
-    desiredState:
-      manifest:
-        version: v1beta1
-        id: helloworldservice
-        containers:
-         - name: helloworldservice
-           image: saturnism/spring-boot-helloworld-service
-           imagePullPolicy: PullAlways
-           ports:
-            - name: http
-              containerPort: 8080
+    visualize: "true"
+spec:
+  replicas: 2
+  selector:
+    name: helloworldservice
+    version: latest
+  template:
+    metadata:
+      labels:
+        name: helloworldservice
+        version: latest
+        uses: redis
+        visualize: "true"
+    spec:
+      containers:
+       - name: helloworldservice
+         image: saturnism/spring-boot-helloworld-service:latest
+         imagePullPolicy: Always
+         ports:
+          - name: http
+            containerPort: 8080

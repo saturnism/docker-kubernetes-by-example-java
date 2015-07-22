@@ -15,4 +15,4 @@
 # limitations under the License.
 ###############################################################################
 
-kubectl rolling-update helloworldservice-controller-latest --update-period=5s -f helloworldservice-controller-v2.yaml
+kubectl rolling-update helloworldservice-controller-v1 --update-period=5s -f helloworldservice-controller-v2.yaml

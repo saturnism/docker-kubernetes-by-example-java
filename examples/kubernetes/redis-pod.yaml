@@ -15,19 +15,19 @@
 ###############################################################################
 
 kind: Pod
-apiVersion: v1beta1
-id: redis
-labels:
+apiVersion: v1
+metadata:
   name: redis
-  role: master
-  visualize: "true"
-desiredState:
-  manifest:
-    version: v1beta1
-    id: redis
-    containers:
-      - name: redis
-        image: redis
-        ports:
-          - name: redis-server
-            containerPort: 6379
+  labels:
+    name: redis
+    role: master
+    visualize: "true"
+spec:
+  metadata:
+    name: redis
+  containers:
+    - name: redis
+      image: redis
+      ports:
+        - name: redis-server
+          containerPort: 6379

@@ -14,14 +14,16 @@
 # limitations under the License.
 ###############################################################################
 
-id: helloworldservice
 kind: Service
-apiVersion: v1beta1
-port: 8080
-containerPort: 8080
-#sessionAffinity: None
-selector:
+apiVersion: v1
+metadata:
   name: helloworldservice
-labels:
-  name: helloworldservice
-  visualize: "true"
+  labels:
+    name: helloworldservice
+    visualize: "true"
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    name: helloworldservice

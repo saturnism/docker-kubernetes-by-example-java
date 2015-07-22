@@ -15,14 +15,18 @@
 ###############################################################################
 
 kind: Service
-apiVersion: v1beta1
-id: redis
-port: 6379
-containerPort: redis-server
-selector:
+apiVersion: v1
+metadata:
   name: redis
-  role: master
-labels:
-  name: redis
-  role: master
-  visualize: "true"
+  labels:
+    name: redis
+    role: master
+    visualize: "true"
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+  selector:
+    name: redis
+    role: master
+
