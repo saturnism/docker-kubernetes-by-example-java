@@ -1,0 +1,16 @@
+spring:
+  data:
+    rest:
+      baseUri: /api
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/app
+    username: root
+    password: yourpassword
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      generate-ddl: true
+      ddl-auto: update
+      globally_quoted_identifiers: true
