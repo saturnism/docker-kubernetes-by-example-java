@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.google.examples</groupId>
+    <artifactId>helloworld-service</artifactId>
+    <version>0.1-opt-2</version>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.4.RELEASE</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+        <plugin>
+          <groupId>com.spotify</groupId>
+          <artifactId>docker-maven-plugin</artifactId>
+          <version>0.2.11</version>
+          <configuration>
+            <baseImage>java:8</baseImage>
+            <imageName>gcr.io/wise-coyote-827/${project.artifactId}</imageName>
+            <imageTags><imageTag>${project.version}</imageTag></imageTags>
+            <forceTags>true</forceTags>
+            <entryPoint>["java", "-jar", "-Djava.security.egd=file:/dev/urandom", "/${project.build.finalName}.jar"]</entryPoint>
+            <resources>
+               <resource>
+                 <targetPath>/</targetPath>
+                 <directory>${project.build.directory}</directory>
+                 <include>${project.build.finalName}.jar</include>
+               </resource>
+            </resources>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>build</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </build>
+
+</project>
