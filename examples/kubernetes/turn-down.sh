@@ -17,19 +17,25 @@
 
 kubectl delete services helloworldui
 
-kubectl resize --replicas=0 replicationcontrollers helloworldui-controller-latest
+#kubectl scale --replicas=0 replicationcontrollers helloworldui-controller-latest
 kubectl delete replicationcontrollers helloworldui-controller-latest
 
 kubectl delete services helloworldservice
 
-kubectl resize --replicas=0 replicationcontrollers helloworldservice-controller-latest
+#kubectl scale --replicas=0 replicationcontrollers helloworldservice-controller-latest
 kubectl delete replicationcontrollers helloworldservice-controller-latest
 
-kubectl resize --replicas=0 replicationcontrollers helloworldservice-controller-v1
+#kubectl scale --replicas=0 replicationcontrollers helloworldservice-controller-v1
 kubectl delete replicationcontrollers helloworldservice-controller-v1
 
-kubectl resize --replicas=0 replicationcontrollers helloworldservice-controller-v2
+#kubectl scale --replicas=0 replicationcontrollers helloworldservice-controller-v2
 kubectl delete replicationcontrollers helloworldservice-controller-v2
 
 kubectl delete services redis
 kubectl delete pods redis
+
+kubectl delete services guestbookservice
+kubectl delete replicationcontrollers guestbookservice-controller-latest
+
+kubectl delete services mysql
+kubectl delete pods mysql

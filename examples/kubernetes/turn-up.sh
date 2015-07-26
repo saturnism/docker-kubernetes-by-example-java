@@ -15,9 +15,13 @@
 # limitations under the License.
 ###############################################################################
 
+kubectl create -f mysql.yaml
+kubectl create -f mysql-service.yaml
+kubectl create -f guestbookservice-controller.yaml
+kubectl create -f guestbookservice-service.yaml
 kubectl create -f redis-pod.yaml
 kubectl create -f redis-service.yaml
-kubectl create -f helloworldservice-controller-latest.yaml
+kubectl create -f helloworldservice-controller-v1.yaml
 kubectl create -f helloworldservice-service.yaml
 kubectl create -f helloworldui-controller-latest.yaml
 kubectl create -f helloworldui-service.yaml
