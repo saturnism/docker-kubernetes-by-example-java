@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql
+  labels: 
+    name: mysql
+    visualize: "true"
+spec: 
+  containers: 
+    - resources:
+        limits :
+          cpu: 0.5
+      image: mysql
+      name: mysql
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          # change this
+          value: yourpassword
+        - name: MYSQL_DATABASE
+          value: app
+      ports: 
+        - containerPort: 3306
+          name: mysql
+      volumeMounts:
+          # name must match the volume name below
+        - name: mysql-persistent-storage
+          # mount path within the container
+          mountPath: /var/lib/mysql
+  volumes:
+    - name: mysql-persistent-storage
+      gcePersistentDisk:
+        # This GCE PD must already exist.
+        pdName: mysql-disk-2
+        fsType: ext4
