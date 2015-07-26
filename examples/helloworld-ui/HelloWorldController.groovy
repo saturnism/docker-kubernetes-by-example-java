@@ -22,6 +22,9 @@ class HelloWorldController {
     @Autowired
     HelloWorldService service
 
+    @Autowired
+    GuestbookService guestbookService
+
     @RequestMapping("/")
     def index(Model model) {
       if (model.containsAttribute("name")) {
@@ -32,12 +35,22 @@ class HelloWorldController {
         "sessionId": RequestContextHolder.currentRequestAttributes().sessionId,
         "hostname": InetAddress.localHost.hostName
       ])
+
+      def messages = guestbookService.all()
+
+      model.addAttribute("messages", messages)
+
       return "index"
     }
 
     @RequestMapping("/greet")
-    def index(@RequestParam String name, Model model) {
+    def index(@RequestParam String name, @RequestParam String message, Model model) {
       model.addAttribute("name", name)
+
+      if (message?.trim()) {
+        guestbookService.add(name, message)
+      }
+
       return "redirect:/"
     }
 }

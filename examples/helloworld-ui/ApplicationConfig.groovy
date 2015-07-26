@@ -27,6 +27,9 @@ class ApplicationConfig {
   @Value("#{systemEnvironment['HELLOWORLDSERVICE_PORT']}")
   String serviceEndpoint
 
+  @Value("#{systemEnvironment['GUESTBOOKSERVICE_PORT']}")
+  String guestbookServiceEndpoint
+
   @Bean
   @Primary
   def HelloWorldService helloWorldService() {
@@ -43,6 +46,21 @@ class ApplicationConfig {
     }
   }
 
+  @Bean
+  @Primary
+  def GuestbookService guestbookService() {
+    def uri
+
+    if (guestbookServiceEndpoint?.trim()) {
+      uri = guestbookServiceEndpoint.replace("tcp:", "http:") + "/api/messages"
+
+      println "Using backend: ${uri}"
+      return new RestGuestbookService(uri: uri)
+    } else {
+      println "Using local backend"
+      return new LocalGuestbookService()
+    }
+  }
 }
 
 @Configuration
