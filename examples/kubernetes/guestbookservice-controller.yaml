@@ -13,31 +13,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-
-ui:
-  image: saturnism/spring-boot-helloworld-ui
-  ports:
-    - "8080:8080"
-  links:
-    - helloworldservice
-    - guestbookservice
-    - redis
-
-helloworldservice:
-  image: saturnism/spring-boot-helloworld-service
-
-guestbookservice:
-  image: saturnism/guestbook-service
-  ports:
-    - "8888:8080"
-  links:
-    - mysql
-
-mysql:
-  image: mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: yourpassword
-    MYSQL_DATABASE: app
-
-redis:
-  image: redis
+kind: ReplicationController
+apiVersion: v1
+metadata:
+  name: guestbookservice-controller-latest
+  labels:
+    name: guestbookservice
+    version: latest
+    visualize: "true"
+spec:
+  replicas: 2
+  selector:
+    name: guestbookservice
+    version: latest
+  template:
+    metadata:
+      labels:
+        name: guestbookservice
+        version: latest
+        uses: mysql
+        visualize: "true"
+    spec:
+      containers:
+       - name: guestbookservice
+         image: saturnism/guestbook-service:latest
+         imagePullPolicy: Always
+         ports:
+          - name: http
+            containerPort: 8080
