@@ -18,6 +18,12 @@
 kubectl delete services helloworldui
 
 #kubectl scale --replicas=0 replicationcontrollers helloworldui-controller-latest
+kubectl delete replicationcontrollers helloworldui-controller-v1
+
+#kubectl scale --replicas=0 replicationcontrollers helloworldui-controller-latest
+kubectl delete replicationcontrollers helloworldui-controller-v2
+
+#kubectl scale --replicas=0 replicationcontrollers helloworldui-controller-latest
 kubectl delete replicationcontrollers helloworldui-controller-latest
 
 kubectl delete services helloworldservice

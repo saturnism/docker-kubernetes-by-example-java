@@ -23,5 +23,5 @@ kubectl create -f redis-pod.yaml
 kubectl create -f redis-service.yaml
 kubectl create -f helloworldservice-controller-v1.yaml
 kubectl create -f helloworldservice-service.yaml
-kubectl create -f helloworldui-controller-latest.yaml
+kubectl create -f helloworldui-controller-v1.yaml
 kubectl create -f helloworldui-service.yaml
