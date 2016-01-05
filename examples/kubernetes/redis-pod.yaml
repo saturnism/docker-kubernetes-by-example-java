@@ -23,8 +23,6 @@ metadata:
     role: master
     visualize: "true"
 spec:
-  metadata:
-    name: redis
   containers:
     - name: redis
       image: redis
