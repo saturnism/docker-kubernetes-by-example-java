@@ -32,5 +32,5 @@ spec:
 #        claimName: mysql-claim
       gcePersistentDisk:
         # This GCE PD must already exist.
-        pdName: mysql-disk-2
+        pdName: mysql-disk
         fsType: ext4
