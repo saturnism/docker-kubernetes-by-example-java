@@ -19,12 +19,13 @@ spring:
       baseUri: /api
   datasource:
     driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://mysql:3306/app
+    url: jdbc:mysql://mysql:3306/app?autoReconnect=true
     username: root
     password: yourpassword
+    test-on-borrow: true
+    validation-query: SELECT 1
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
-    show-sql: true
     hibernate:
       generate-ddl: true
       ddl-auto: update
