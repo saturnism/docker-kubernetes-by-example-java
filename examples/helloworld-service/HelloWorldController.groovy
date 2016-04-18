@@ -16,17 +16,26 @@
 
 @RestController
 class HelloWorldController {
-    def version = "1.0";
-    //def version = "2.0";
+    @Value("\${greeting}")
+    def greeting
+
+    def version = "1.0"
+    //def version = "2.0"
+    def engine = new groovy.text.SimpleTemplateEngine()
 
     @RequestMapping(value="/hello/{name}")
     def helloworld(@PathVariable name) {
-      def hostname = InetAddress.localHost.hostName
+      def tpl = engine.createTemplate(greeting)
+      def binding = [
+        name: name,
+        hostname: InetAddress.localHost.hostName,
+        version: version
+      ]
 
       [
-        "greeting": "Hello ${name} from ${hostname} with ${version}".toString(),
-        "hostname": hostname,
-        "version": version
+        "greeting": tpl.make(binding).toString(),
+        "hostname": binding.hostname,
+        "version": binding.version
       ];
     }
 }
