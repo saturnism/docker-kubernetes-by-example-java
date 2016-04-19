@@ -15,3 +15,5 @@
 ###############################################################################
 
 FROM saturnism/spring-boot:1.2.3-jdk-8-groovy-2.4.3-onbuild
+CMD []
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/bin/app.jar"]
