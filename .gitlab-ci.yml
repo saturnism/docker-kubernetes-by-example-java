@@ -1,0 +1,9 @@
+image: docker:latest
+services:
+  - docker:dind
+
+build_image:
+  script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker build -t registry.gitlab.com/saturnism/helloworld-service:$CI_BUILD_REF_NAME examples/helloworld-service
+
