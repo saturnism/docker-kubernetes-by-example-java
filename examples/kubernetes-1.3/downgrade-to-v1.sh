@@ -1,3 +1,4 @@
+#!/bin/bash
 ###############################################################################
 # Copyright 2015 Google Inc. All rights reserved.
 #
@@ -14,30 +15,5 @@
 # limitations under the License.
 ###############################################################################
 
-ui:
-  image: saturnism/spring-boot-helloworld-ui
-  ports:
-    - "8080:8080"
-  links:
-    - helloworldservice
-    - guestbookservice
-    - redis
+kubectl rollout undo deployment helloworldservice
 
-helloworldservice:
-  image: saturnism/spring-boot-helloworld-service
-
-guestbookservice:
-  image: saturnism/guestbook-service
-  ports:
-    - "8888:8080"
-  links:
-    - mysql
-
-mysql:
-  image: mysql:5.6
-  environment:
-    MYSQL_ROOT_PASSWORD: yourpassword
-    MYSQL_DATABASE: app
-
-redis:
-  image: redis

@@ -14,30 +14,24 @@
 # limitations under the License.
 ###############################################################################
 
-ui:
-  image: saturnism/spring-boot-helloworld-ui
-  ports:
-    - "8080:8080"
-  links:
-    - helloworldservice
-    - guestbookservice
-    - redis
-
-helloworldservice:
-  image: saturnism/spring-boot-helloworld-service
-
-guestbookservice:
-  image: saturnism/guestbook-service
-  ports:
-    - "8888:8080"
-  links:
-    - mysql
-
-mysql:
-  image: mysql:5.6
-  environment:
-    MYSQL_ROOT_PASSWORD: yourpassword
-    MYSQL_DATABASE: app
-
-redis:
-  image: redis
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: redis
+    visualize: "true"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redis
+        visualize: "true"
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        ports:
+        - name: redis-server
+          containerPort: 6379

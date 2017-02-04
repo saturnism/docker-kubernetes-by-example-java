@@ -1,3 +1,4 @@
+#!/bin/bash
 ###############################################################################
 # Copyright 2015 Google Inc. All rights reserved.
 #
@@ -14,30 +15,15 @@
 # limitations under the License.
 ###############################################################################
 
-ui:
-  image: saturnism/spring-boot-helloworld-ui
-  ports:
-    - "8080:8080"
-  links:
-    - helloworldservice
-    - guestbookservice
-    - redis
+kubectl delete svc helloworld-ui
+kubectl delete deployment helloworld-ui
+kubectl delete deployment helloworld-ui-canary-v2
 
-helloworldservice:
-  image: saturnism/spring-boot-helloworld-service
+kubectl delete svc helloworld-service
+kubectl delete deployment helloworld-service
 
-guestbookservice:
-  image: saturnism/guestbook-service
-  ports:
-    - "8888:8080"
-  links:
-    - mysql
+kubectl delete svc guestbook-service
+kubectl delete deployment guestbook-service
 
-mysql:
-  image: mysql:5.6
-  environment:
-    MYSQL_ROOT_PASSWORD: yourpassword
-    MYSQL_DATABASE: app
-
-redis:
-  image: redis
+kubectl delete svc redis mysql
+kubectl delete deployment redis mysql

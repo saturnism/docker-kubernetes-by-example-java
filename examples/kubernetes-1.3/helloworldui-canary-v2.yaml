@@ -13,31 +13,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-
-ui:
-  image: saturnism/spring-boot-helloworld-ui
-  ports:
-    - "8080:8080"
-  links:
-    - helloworldservice
-    - guestbookservice
-    - redis
-
-helloworldservice:
-  image: saturnism/spring-boot-helloworld-service
-
-guestbookservice:
-  image: saturnism/guestbook-service
-  ports:
-    - "8888:8080"
-  links:
-    - mysql
-
-mysql:
-  image: mysql:5.6
-  environment:
-    MYSQL_ROOT_PASSWORD: yourpassword
-    MYSQL_DATABASE: app
-
-redis:
-  image: redis
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-ui-canary-v2
+  labels:
+    app: helloworld-ui
+    visualize: "true"
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: helloworld-ui
+        version: "2.0"
+        visualize: "true"
+      annotations:
+        visualizer/uses: helloworld-service,guestbook-service,redis
+    spec:
+      containers:
+      - name: helloworld-ui
+        image: saturnism/spring-boot-helloworld-ui:v2
+        env:
+        - name: HELLOWORLDSERVICE_PORT
+          value: http://helloworld-service:8080
+        - name: GUESTBOOKSERVICE_PORT
+          value: http://guestbook-service:8080
+        ports:
+        - name: http
+          containerPort: 8080

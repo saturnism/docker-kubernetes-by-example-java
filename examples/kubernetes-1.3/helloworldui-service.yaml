@@ -14,30 +14,18 @@
 # limitations under the License.
 ###############################################################################
 
-ui:
-  image: saturnism/spring-boot-helloworld-ui
+kind: Service
+apiVersion: v1
+metadata:
+  name: helloworld-ui
+  labels:
+    app: helloworld-ui
+    visualize: "true"
+spec:
+  type: LoadBalancer
   ports:
-    - "8080:8080"
-  links:
-    - helloworldservice
-    - guestbookservice
-    - redis
-
-helloworldservice:
-  image: saturnism/spring-boot-helloworld-service
-
-guestbookservice:
-  image: saturnism/guestbook-service
-  ports:
-    - "8888:8080"
-  links:
-    - mysql
-
-mysql:
-  image: mysql:5.6
-  environment:
-    MYSQL_ROOT_PASSWORD: yourpassword
-    MYSQL_DATABASE: app
-
-redis:
-  image: redis
+    - port: 80
+      targetPort: http
+      name: http
+  selector:
+    app: helloworld-ui
