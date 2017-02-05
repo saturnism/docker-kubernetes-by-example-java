@@ -15,4 +15,4 @@
 # limitations under the License.
 ###############################################################################
 
-kubectl apply -f helloworldservice-deployment-v2.yalm
+kubectl apply -f helloworldservice-deployment-v2.yaml

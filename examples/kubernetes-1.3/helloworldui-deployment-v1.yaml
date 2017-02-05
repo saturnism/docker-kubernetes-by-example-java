@@ -42,7 +42,6 @@ spec:
           value: http://helloworld-service:8080
         - name: GUESTBOOKSERVICE_PORT
           value: http://guestbook-service:8080
-        imagePullPolicy: Always
         readinessProbe:
           httpGet:
             path: /

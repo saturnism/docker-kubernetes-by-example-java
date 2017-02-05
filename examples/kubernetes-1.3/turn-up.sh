@@ -15,6 +15,7 @@
 # limitations under the License.
 ###############################################################################
 
+kubectl apply -f storage-gcp-standard.yaml --record
 kubectl apply -f mysql-pvc.yaml -f mysql-deployment.yaml -f mysql-service.yaml --record
 kubectl apply -f redis-deployment.yaml -f redis-service.yaml --record
 kubectl apply -f guestbookservice-deployment.yaml -f guestbookservice-service.yaml --record
