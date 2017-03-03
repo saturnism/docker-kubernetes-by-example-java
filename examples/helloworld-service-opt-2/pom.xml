@@ -7,6 +7,12 @@
     <artifactId>helloworld-service</artifactId>
     <version>0.1-opt-2</version>
 
+    <scm>
+      <connection>scm:git:https://github.com/saturnism/spring-boot-docker.git</connection>
+      <developerConnection>scm:git:git@github.com:saturnism/spring-boot-docker.git</developerConnection>
+			<url>https://github.com/saturnism/spring-boot-docker</url>
+		</scm>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -25,12 +31,28 @@
     </properties>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
 
+        <plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>buildnumber-maven-plugin</artifactId>
+					<version>1.4</version>
+					<executions>
+						<execution>
+							<phase>validate</phase>
+							<goals>
+								<goal>create</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+            <shortRevisionLength>5</shortRevisionLength>
+					</configuration>
+				</plugin>
         <plugin>
           <groupId>com.spotify</groupId>
           <artifactId>docker-maven-plugin</artifactId>
@@ -38,7 +60,7 @@
           <configuration>
             <baseImage>java:8</baseImage>
             <imageName>gcr.io/wise-coyote-827/${project.artifactId}</imageName>
-            <imageTags><imageTag>${project.version}</imageTag></imageTags>
+            <imageTags><imageTag>${project.version}-${buildNumber}</imageTag></imageTags>
             <forceTags>true</forceTags>
             <entryPoint>["java", "-jar", "-Djava.security.egd=file:/dev/urandom", "/${project.build.finalName}.jar"]</entryPoint>
             <resources>
