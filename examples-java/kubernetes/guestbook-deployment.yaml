@@ -25,18 +25,24 @@ spec:
   selector:
     matchLabels:
       app: guestbook-service
+      serving: "true"
   template:
     metadata:
       labels:
         app: guestbook-service
         version: "latest"
+        serving: "true"
         visualize: "true"
       annotations:
         visualizer/uses: mysql
     spec:
       containers:
       - name: guestbook-service
-        image: saturnism/guestbook-service:v1
+        image: saturnism/guestbook-service:latest
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
         ports:
         - name: http
           containerPort: 8080

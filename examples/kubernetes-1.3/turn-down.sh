@@ -28,3 +28,5 @@ kubectl delete deployment guestbook-service
 kubectl delete svc redis mysql
 kubectl delete deployment redis mysql
 kubectl delete pvc mysql-pvc
+
+#kubectl delete storageclass standard

@@ -1,0 +1,22 @@
+spring:
+  zipkin:
+    baseUrl: http://zipkin:9411/
+  data:
+    rest:
+      base-path: /api
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/app?autoReconnect=true
+    username: root
+    password: yourpassword
+    test-on-borrow: true
+    validation-query: SELECT 1
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      generate-ddl: true
+      ddl-auto: update
+      globally_quoted_identifiers: true
+  sleuth:
+    sampler:
+      percentage: "1.0"

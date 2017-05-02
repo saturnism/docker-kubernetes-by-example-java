@@ -16,30 +16,38 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: guestbook-service
+  name: helloworld-ui
   labels:
-    app: guestbook-service
+    app: helloworld-ui
     visualize: "true"
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: guestbook-service
+      app: helloworld-ui
+      serving: "true"
   template:
     metadata:
       labels:
-        app: guestbook-service
-        version: "latest"
+        app: helloworld-ui
+        version: latest
+        serving: "true"
         visualize: "true"
       annotations:
-        visualizer/uses: mysql
+        visualizer/uses: helloworld-service,guestbook-service,redis
     spec:
       containers:
-      - name: guestbook-service
-        image: saturnism/guestbook-service:v1
+      - name: helloworld-ui
+        image: saturnism/helloworld-ui:latest
+        env:
+        - name: HELLOWORLDSERVICE_PORT
+          value: http://helloworld-service:8080
+        - name: GUESTBOOKSERVICE_PORT
+          value: http://guestbook-service:8080
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
         ports:
         - name: http
           containerPort: 8080
-        resources:
-          limits:
-            cpu: "500m"

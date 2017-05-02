@@ -18,6 +18,7 @@
 kubectl create -f storage-gcp-standard.yaml --record
 kubectl apply -f mysql-pvc.yaml -f mysql-deployment.yaml -f mysql-service.yaml --record
 kubectl apply -f redis-deployment.yaml -f redis-service.yaml --record
-kubectl apply -f guestbookservice-deployment.yaml -f guestbookservice-service.yaml --record
-kubectl apply -f helloworldservice-deployment-v1.yaml -f helloworldservice-service.yaml --record
-kubectl apply -f helloworldui-deployment-v1.yaml -f helloworldui-service.yaml --record
+kubectl apply -f zipkin-deployment.yaml -f zipkin-service.yaml --record
+kubectl apply -f helloworld-deployment.yaml -f helloworld-service.yaml --record
+kubectl apply -f guestbook-deployment.yaml -f guestbook-service.yaml --record
+kubectl apply -f ui-deployment.yaml -f ui-service.yaml --record

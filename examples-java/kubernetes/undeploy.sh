@@ -15,9 +15,21 @@
 # limitations under the License.
 ###############################################################################
 
-kubectl create -f storage-gcp-standard.yaml --record
-kubectl apply -f mysql-pvc.yaml -f mysql-deployment.yaml -f mysql-service.yaml --record
-kubectl apply -f redis-deployment.yaml -f redis-service.yaml --record
-kubectl apply -f guestbookservice-deployment.yaml -f guestbookservice-service.yaml --record
-kubectl apply -f helloworldservice-deployment-v1.yaml -f helloworldservice-service.yaml --record
-kubectl apply -f helloworldui-deployment-v1.yaml -f helloworldui-service.yaml --record
+kubectl delete svc helloworld-ui
+kubectl delete deployment helloworld-ui
+kubectl delete deployment helloworld-ui-canary-v2
+
+kubectl delete svc helloworld-service
+kubectl delete deployment helloworld-service
+
+kubectl delete svc guestbook-service
+kubectl delete deployment guestbook-service
+
+kubectl delete svc redis mysql
+kubectl delete deployment redis mysql
+kubectl delete pvc mysql-pvc
+
+kubectl delete deployment zipkin
+kubectl delete service zipkin
+
+#kubectl delete storageclass standard

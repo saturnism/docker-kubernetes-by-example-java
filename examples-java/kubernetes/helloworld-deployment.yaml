@@ -1,4 +1,3 @@
-#!/bin/bash
 ###############################################################################
 # Copyright 2015 Google Inc. All rights reserved.
 #
@@ -14,10 +13,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-
-kubectl create -f storage-gcp-standard.yaml --record
-kubectl apply -f mysql-pvc.yaml -f mysql-deployment.yaml -f mysql-service.yaml --record
-kubectl apply -f redis-deployment.yaml -f redis-service.yaml --record
-kubectl apply -f guestbookservice-deployment.yaml -f guestbookservice-service.yaml --record
-kubectl apply -f helloworldservice-deployment-v1.yaml -f helloworldservice-service.yaml --record
-kubectl apply -f helloworldui-deployment-v1.yaml -f helloworldui-service.yaml --record
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: helloworld-service
+  labels:
+    app: helloworld-service
+    visualize: "true"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: helloworld-service
+      serving: "true"
+  template:
+    metadata:
+      labels:
+        app: helloworld-service
+        version: "latest"
+        serving: "true"
+        visualize: "true"
+    spec:
+      containers:
+      - name: helloworld-service
+        image: saturnism/helloworld-service:latest
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+        ports:
+        - name: http
+          containerPort: 8080

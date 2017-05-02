@@ -1,4 +1,3 @@
-#!/bin/bash
 ###############################################################################
 # Copyright 2015 Google Inc. All rights reserved.
 #
@@ -15,9 +14,16 @@
 # limitations under the License.
 ###############################################################################
 
-kubectl create -f storage-gcp-standard.yaml --record
-kubectl apply -f mysql-pvc.yaml -f mysql-deployment.yaml -f mysql-service.yaml --record
-kubectl apply -f redis-deployment.yaml -f redis-service.yaml --record
-kubectl apply -f guestbookservice-deployment.yaml -f guestbookservice-service.yaml --record
-kubectl apply -f helloworldservice-deployment-v1.yaml -f helloworldservice-service.yaml --record
-kubectl apply -f helloworldui-deployment-v1.yaml -f helloworldui-service.yaml --record
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis
+  labels:
+    app: redis
+    visualize: "true"
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+  selector:
+    app: redis
