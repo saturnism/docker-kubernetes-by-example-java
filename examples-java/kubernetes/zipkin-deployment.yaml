@@ -34,8 +34,8 @@ spec:
     spec:
       containers:
       - name: zipkin
-        #image: gcr.io/stackdriver-trace-docker/zipkin-collector
-        image: openzipkin/zipkin:1.24.0
+        image: gcr.io/stackdriver-trace-docker/zipkin-collector
+        #image: openzipkin/zipkin:1.24.0
         imagePullPolicy: IfNotPresent
         readinessProbe:
           httpGet:

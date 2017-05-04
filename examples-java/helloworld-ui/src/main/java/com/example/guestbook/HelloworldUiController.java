@@ -17,10 +17,8 @@ package com.example.guestbook;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.Map;
 
@@ -41,7 +39,8 @@ public class HelloworldUiController {
   @GetMapping("/")
   public String index(Model model) {
     if (model.containsAttribute("name")) {
-      Map<String, String> greeting = helloworldService.greeting((String) model.asMap().get("name"));
+      String name = (String) model.asMap().get("name");
+      Map<String, String> greeting = helloworldService.greeting(name);
       model.addAttribute("greeting", greeting);
     }
 
