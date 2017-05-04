@@ -22,6 +22,7 @@ metadata:
     app: zipkin
     visualize: "true"
 spec:
+  type: LoadBalancer
   ports:
     - port: 9411
       targetPort: http
