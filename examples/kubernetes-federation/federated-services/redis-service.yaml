@@ -22,6 +22,7 @@ metadata:
     app: redis
     visualize: "true"
 spec:
+  type: LoadBalancer
   ports:
     - port: 6379
       targetPort: 6379

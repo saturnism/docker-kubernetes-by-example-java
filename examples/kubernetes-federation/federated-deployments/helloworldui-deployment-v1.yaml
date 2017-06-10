@@ -42,7 +42,8 @@ spec:
           value: http://helloworld-service.default.federation:8080
         - name: GUESTBOOKSERVICE_PORT
           value: http://guestbook-service.default.federation:8080
-        imagePullPolicy: Always
+        - name: REDIS_PORT
+          value: tcp://redis.default.federation:6379
         readinessProbe:
           httpGet:
             path: /
