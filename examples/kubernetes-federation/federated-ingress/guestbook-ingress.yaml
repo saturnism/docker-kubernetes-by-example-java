@@ -10,4 +10,4 @@ spec:
       paths:
       - backend:
           serviceName: helloworld-ui
-          servicePort: 8080
+          servicePort: 80
