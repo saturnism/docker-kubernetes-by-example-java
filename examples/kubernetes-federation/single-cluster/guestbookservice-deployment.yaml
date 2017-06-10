@@ -40,6 +40,3 @@ spec:
         ports:
         - name: http
           containerPort: 8080
-        resources:
-          limits:
-            cpu: "500m"
