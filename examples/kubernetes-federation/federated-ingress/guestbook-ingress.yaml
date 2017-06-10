@@ -9,5 +9,5 @@ spec:
   - http:
       paths:
       - backend:
-          serviceName: guestbook-service
+          serviceName: helloworld-ui
           servicePort: 8080
