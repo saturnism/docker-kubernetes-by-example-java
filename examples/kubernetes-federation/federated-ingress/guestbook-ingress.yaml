@@ -1,0 +1,13 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: guestbook-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: guestbook-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: guestbook-service
+          servicePort: 8080
