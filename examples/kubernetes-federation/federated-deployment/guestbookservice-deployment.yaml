@@ -23,10 +23,8 @@ metadata:
   annotations:
     federation.kubernetes.io/deployment-preferences: |
       {
-        "rebalance": true,
         "clusters": {
           "us-central-cluster": {
-            "minReplicas": 1
           }
         }
       }
