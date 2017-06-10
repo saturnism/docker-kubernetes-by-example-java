@@ -39,9 +39,9 @@ spec:
         image: saturnism/spring-boot-helloworld-ui:v1
         env:
         - name: HELLOWORLDSERVICE_PORT
-          value: http://helloworld-service:8080
+          value: http://helloworld-service.default.federation:8080
         - name: GUESTBOOKSERVICE_PORT
-          value: http://guestbook-service:8080
+          value: http://guestbook-service.default.federation:8080
         imagePullPolicy: Always
         readinessProbe:
           httpGet:
