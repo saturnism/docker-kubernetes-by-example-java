@@ -15,7 +15,6 @@
 # limitations under the License.
 ###############################################################################
 
-kubectl create -f storage-gcp-standard.yaml --record
 kubectl apply -f mysql-pvc.yaml -f mysql-deployment.yaml -f mysql-service.yaml --record
 kubectl apply -f redis-deployment.yaml -f redis-service.yaml --record
 kubectl apply -f zipkin-deployment.yaml -f zipkin-service.yaml --record
