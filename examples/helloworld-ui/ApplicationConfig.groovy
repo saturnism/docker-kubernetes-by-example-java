@@ -20,6 +20,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.*
 import org.springframework.session.web.http.*
 import org.springframework.web.filter.*
 import org.springframework.boot.context.embedded.*
+import org.springframework.boot.web.servlet.*;
 
 @Grab("org.springframework.session:spring-session-data-redis:1.0.0.RELEASE")
 @Configuration

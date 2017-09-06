@@ -21,7 +21,7 @@ metadata:
     app: guestbook-service
     visualize: "true"
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: guestbook-service
