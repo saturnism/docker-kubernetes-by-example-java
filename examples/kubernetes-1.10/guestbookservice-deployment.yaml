@@ -13,25 +13,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis
+  name: guestbook-service
   labels:
-    app: redis
+    app: guestbook-service
     visualize: "true"
 spec:
-  replicas: 1
+  replicas: 2
+  selector:
+    matchLabels:
+      app: guestbook-service
   template:
     metadata:
       labels:
-        app: redis
+        app: guestbook-service
+        version: "latest"
         visualize: "true"
+      annotations:
+        visualizer/uses: mysql
     spec:
       containers:
-      - name: redis
-        image: redis
+      - name: guestbook-service
+        image: saturnism/guestbook-service:v1
         ports:
-        - name: redis-server
-          containerPort: 6379
+        - name: http
+          containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+          limits:
+            cpu: "500m"

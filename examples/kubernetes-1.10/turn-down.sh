@@ -1,3 +1,4 @@
+#!/bin/bash
 ###############################################################################
 # Copyright 2015 Google Inc. All rights reserved.
 #
@@ -13,28 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: helloworld-service
-  labels:
-    app: helloworld-service
-    visualize: "true"
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: helloworld-service
-  template:
-    metadata:
-      labels:
-        app: helloworld-service
-        version: "1.0"
-        visualize: "true"
-    spec:
-      containers:
-      - name: helloworld-service
-        image: saturnism/spring-boot-helloworld-service:1.0
-        ports:
-        - name: http
-          containerPort: 8080
+
+kubectl delete svc helloworld-ui
+kubectl delete deployment helloworld-ui
+kubectl delete deployment helloworld-ui-canary-v2
+
+kubectl delete svc helloworld-service
+kubectl delete deployment helloworld-service
+
+kubectl delete svc guestbook-service
+kubectl delete deployment guestbook-service
+
+kubectl delete svc redis mysql
+kubectl delete deployment redis mysql

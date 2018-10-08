@@ -13,39 +13,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-apiVersion: extensions/v1beta1
+
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: helloworld-ui
+  name: redis
   labels:
-    app: helloworld-ui
+    app: redis
     visualize: "true"
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: helloworld-ui
   template:
     metadata:
       labels:
-        app: helloworld-ui
-        version: "1.0"
+        app: redis
         visualize: "true"
-      annotations:
-        visualizer/uses: helloworld-service,guestbook-service,redis
     spec:
       containers:
-      - name: helloworld-ui
-        image: saturnism/spring-boot-helloworld-ui:v1
-        env:
-        - name: HELLOWORLDSERVICE_PORT
-          value: http://helloworld-service:8080
-        - name: GUESTBOOKSERVICE_PORT
-          value: http://guestbook-service:8080
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
+      - name: redis
+        image: redis
         ports:
-        - name: http
-          containerPort: 8080
+        - name: redis-server
+          containerPort: 6379
