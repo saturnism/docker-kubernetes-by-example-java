@@ -15,5 +15,5 @@
 # limitations under the License.
 ###############################################################################
 
-kubectl rollout undo deployment helloworldservice
+kubectl rollout undo deployment helloworld-service
 
