@@ -51,7 +51,7 @@ spec:
           value: redis
         readinessProbe:
           httpGet:
-            path: /health
+            path: /actuator/health
             port: 8080
         ports:
         - name: http

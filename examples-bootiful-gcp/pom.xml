@@ -23,6 +23,14 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.M3</spring-cloud.version>
+		<download-maven-plugin.version>1.4.1</download-maven-plugin.version>
+
+		<!-- Stackdriver Agent -->
+        <jib.agent.directory>${project.build.directory}/jib-agents</jib.agent.directory>
+		<stackdriver.debugger.url>https://storage.googleapis.com/cloud-debugger/compute-java/debian-wheezy/cdbg_java_agent_gce.tar.gz</stackdriver.debugger.url>
+        <stackdriver.debugger.directory>/opt/debugger</stackdriver.debugger.directory>
+		<stackdriver.profiler.url>https://storage.googleapis.com/cloud-profiler/java/latest/profiler_java_agent.tar.gz</stackdriver.profiler.url>
+		<stackdriver.profiler.directory>/opt/profiler</stackdriver.profiler.directory>
 
 		<!-- TODO change the following to your Docker registry prefix -->
 		<docker.image.prefix>gcr.io/wise-coyote-827</docker.image.prefix>
@@ -36,9 +44,22 @@
 					<artifactId>jib-maven-plugin</artifactId>
 					<version>0.10.1</version>
 					<configuration>
+						<from>
+							<image>adoptopenjdk/openjdk8-openj9:x86_64-ubuntu-jdk8u192-b12_openj9-0.11.0-slim</image>
+						</from>
 						<to>
 							<image>${docker.image.prefix}/bootiful-${project.artifactId}</image>
 						</to>
+                        <extraDirectory>${jib.agent.directory}</extraDirectory>
+						<container>
+							<jvmFlags>
+								<jvmFlag>-XX:+ContainerSupport</jvmFlag>
+                                <jvmFlag>-agentpath:/opt/profiler/profiler_java_agent.so=-cprof_service=${project.artifactId},-cprof_service_version=${project.version}</jvmFlag>
+								<jvmFlag>-agentpath:${stackdriver.debugger.directory}/cdbg_java_agent.so=--logtostderr=1</jvmFlag>
+								<jvmFlag>-Dcom.google.cdbg.module=${project.artifactId}</jvmFlag>
+								<jvmFlag>-Dcom.google.cdbg.version=${project.version}</jvmFlag>
+							</jvmFlags>
+						</container>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -55,6 +76,37 @@
 					<configuration>
 						<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
 					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>com.googlecode.maven-download-plugin</groupId>
+					<artifactId>download-maven-plugin</artifactId>
+					<version>${download-maven-plugin.version}</version>
+					<executions>
+						<execution>
+							<id>install-stackdriver-debugger</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>wget</goal>
+							</goals>
+							<configuration>
+								<url>${stackdriver.debugger.url}</url>
+								<unpack>true</unpack>
+								<outputDirectory>${jib.agent.directory}/${stackdriver.debugger.directory}</outputDirectory>
+							</configuration>
+						</execution>
+						<execution>
+							<id>install-stackdriver-profiler</id>
+							<phase>prepare-package</phase>
+							<goals>
+								<goal>wget</goal>
+							</goals>
+							<configuration>
+								<url>${stackdriver.profiler.url}</url>
+								<unpack>true</unpack>
+								<outputDirectory>${jib.agent.directory}/${stackdriver.profiler.directory}</outputDirectory>
+							</configuration>
+						</execution>
+					</executions>
 				</plugin>
 			</plugins>
 		</pluginManagement>

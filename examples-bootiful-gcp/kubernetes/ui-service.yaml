@@ -25,7 +25,7 @@ spec:
   type: LoadBalancer
   ports:
     - port: 80
-      targetPort: http
+      targetPort: 8080
       name: http
   selector:
     app: helloworld-ui
