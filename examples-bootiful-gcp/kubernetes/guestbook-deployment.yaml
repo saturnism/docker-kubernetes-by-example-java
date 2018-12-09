@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: guestbook-service
@@ -35,13 +35,16 @@ spec:
         visualize: "true"
       annotations:
         visualizer/uses: mysql
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        promteheus.io/path: /actuator/prometheus
     spec:
       containers:
       - name: guestbook-service
-        image: saturnism/guestbook-service:latest
+        image: gcr.io/wise-coyote-827/bootiful-guestbook-service:latest
         readinessProbe:
           httpGet:
-            path: /health
+            path: /actuator/health
             port: 8080
         ports:
         - name: http

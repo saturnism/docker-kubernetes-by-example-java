@@ -37,7 +37,7 @@
 					<version>0.10.1</version>
 					<configuration>
 						<to>
-							<image>${docker.image.prefix}/${project.artifactId}</image>
+							<image>${docker.image.prefix}/bootiful-${project.artifactId}</image>
 						</to>
 					</configuration>
 				</plugin>

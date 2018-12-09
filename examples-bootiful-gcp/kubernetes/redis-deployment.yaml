@@ -14,7 +14,7 @@
 # limitations under the License.
 ###############################################################################
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redis
@@ -23,6 +23,9 @@ metadata:
     visualize: "true"
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: redis
   template:
     metadata:
       labels:
@@ -31,7 +34,7 @@ spec:
     spec:
       containers:
       - name: redis
-        image: redis
+        image: redis:5.0.2
         ports:
         - name: redis-server
           containerPort: 6379

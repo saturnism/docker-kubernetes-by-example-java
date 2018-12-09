@@ -34,16 +34,12 @@ import java.util.Arrays;
  * Created by rayt on 5/1/17.
  */
 @Configuration
-@EnableRedisHttpSession
 public class ApplicationConfig {
-  @Value("#{systemEnvironment['HELLOWORLDSERVICE_PORT']}")
+  @Value("${helloworldservice.endpoint:http://localhost:8081}/hello")
   private String helloworldServiceEndpoint;
 
-  @Value("#{systemEnvironment['GUESTBOOKSERVICE_PORT']}")
+  @Value("${guestbookservice.endpoint:http://localhost:8082}/api/messages")
   private String guestbookServiceEndpoint;
-
-  @Value("#{systemEnvironment['REDIS_PORT']}")
-  private String redisEndpoint;
 
   @Bean
   RestTemplate restTemplate() {
@@ -52,35 +48,11 @@ public class ApplicationConfig {
 
   @Bean
   HelloworldService helloworldService(RestTemplate restTemplate) {
-    String endpoint = helloworldServiceEndpoint.trim().replace("tcp:", "http:") + "/hello";
-    return new HelloworldService(restTemplate, endpoint);
+    return new HelloworldService(restTemplate, helloworldServiceEndpoint);
   }
 
   @Bean
   GuestbookService guestbookService(RestTemplate restTemplate) {
-    String endpoint = guestbookServiceEndpoint.trim().replace("tcp:", "http:") + "/api/messages";
-    return new GuestbookService(restTemplate, endpoint);
+    return new GuestbookService(restTemplate, guestbookServiceEndpoint);
   }
-
-  @Bean
-  @Order(value = 0)
-  FilterRegistrationBean sessionRepositoryFilterRegistration(
-      SessionRepositoryFilter filter) {
-    FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(
-        new DelegatingFilterProxy(filter));
-    filterRegistrationBean.setUrlPatterns(Arrays.asList("/*"));
-
-    return filterRegistrationBean;
-  }
-
-  @Bean
-  JedisConnectionFactory jedisConnectionFactory() throws URISyntaxException {
-    URI uri = new URI(redisEndpoint);
-    JedisConnectionFactory factory = new JedisConnectionFactory();
-    factory.setHostName(uri.getHost());
-    factory.setPort(uri.getPort());
-
-    return factory;
-  }
-
 }

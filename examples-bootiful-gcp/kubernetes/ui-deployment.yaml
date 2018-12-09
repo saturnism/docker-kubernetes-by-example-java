@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: helloworld-ui
@@ -35,15 +35,20 @@ spec:
         visualize: "true"
       annotations:
         visualizer/uses: helloworld-service,guestbook-service,redis
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        promteheus.io/path: /actuator/prometheus
     spec:
       containers:
       - name: helloworld-ui
-        image: saturnism/helloworld-ui:latest
+        image: gcr.io/wise-coyote-827/bootiful-helloworld-ui:latest
         env:
-        - name: HELLOWORLDSERVICE_PORT
+        - name: HELLOWORLDSERVICE_ENDPOINT
           value: http://helloworld-service:8080
-        - name: GUESTBOOKSERVICE_PORT
+        - name: GUESTBOOKSERVICE_ENDPOINT
           value: http://guestbook-service:8080
+        - name: SPRING_REDIS_HOST
+          value: redis
         readinessProbe:
           httpGet:
             path: /health
