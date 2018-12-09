@@ -15,11 +15,13 @@
  */
 package com.example.guestbook;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.annotation.SessionScope;
 
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -27,6 +29,7 @@ import java.util.Map;
  */
 @Controller
 @SessionAttributes("name")
+@Slf4j
 public class HelloworldUiController {
   private final HelloworldService helloworldService;
   private final GuestbookService guestbookService;
@@ -37,7 +40,8 @@ public class HelloworldUiController {
   }
 
   @GetMapping("/")
-  public String index(Model model) {
+  public String index(HttpSession session, Model model) {
+  	log.info("starting index");
     if (model.containsAttribute("name")) {
       String name = (String) model.asMap().get("name");
       Map<String, String> greeting = helloworldService.greeting(name);
@@ -51,6 +55,7 @@ public class HelloworldUiController {
 
   @PostMapping("/greet")
   public String greet(@RequestParam String name, @RequestParam String message, Model model) {
+  	log.info("greeting from {}", name);
     model.addAttribute("name", name);
     if (message != null && !message.trim().isEmpty()) {
       guestbookService.add(name, message);

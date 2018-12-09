@@ -44,16 +44,14 @@
 					<artifactId>jib-maven-plugin</artifactId>
 					<version>0.10.1</version>
 					<configuration>
-						<from>
-							<image>adoptopenjdk/openjdk8-openj9:x86_64-ubuntu-jdk8u192-b12_openj9-0.11.0-slim</image>
-						</from>
 						<to>
 							<image>${docker.image.prefix}/bootiful-${project.artifactId}</image>
 						</to>
                         <extraDirectory>${jib.agent.directory}</extraDirectory>
 						<container>
 							<jvmFlags>
-								<jvmFlag>-XX:+ContainerSupport</jvmFlag>
+								<jvmFlag>-XX:+UnlockExperimentalVMOptions</jvmFlag>
+								<jvmFlag>-XX:+UseCGroupMemoryLimitForHeap</jvmFlag>
                                 <jvmFlag>-agentpath:/opt/profiler/profiler_java_agent.so=-cprof_service=${project.artifactId},-cprof_service_version=${project.version}</jvmFlag>
 								<jvmFlag>-agentpath:${stackdriver.debugger.directory}/cdbg_java_agent.so=--logtostderr=1</jvmFlag>
 								<jvmFlag>-Dcom.google.cdbg.module=${project.artifactId}</jvmFlag>

@@ -37,7 +37,7 @@ spec:
         visualizer/uses: helloworld-service,guestbook-service,redis
         prometheus.io/scrape: "true"
         prometheus.io/port: "8080"
-        promteheus.io/path: /actuator/prometheus
+        prometheus.io/path: /actuator/prometheus
     spec:
       containers:
       - name: helloworld-ui
@@ -53,6 +53,13 @@ spec:
           httpGet:
             path: /actuator/health
             port: 8080
+        resources:
+          requests:
+            cpu: 0.5
+            memory: 512Mi
+          limits:
+            cpu: 2.0
+            memory: 1Gi
         ports:
         - name: http
           containerPort: 8080

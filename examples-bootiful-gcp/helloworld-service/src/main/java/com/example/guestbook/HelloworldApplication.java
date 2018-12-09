@@ -15,6 +15,7 @@
  */
 package com.example.guestbook;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -37,11 +38,13 @@ public class HelloworldApplication {
 }
 
 @RestController
+@Slf4j
 class HelloworldController {
   private final String version = "1.0";
 
   @GetMapping("/hello/{name}")
   public Map<String, String> hello(@Value("${greeting}") String greetingTemplate, @PathVariable String name) throws UnknownHostException {
+  	log.info("received hello from {}", name);
     Map<String, String> response = new HashMap<>();
 
     String hostname = InetAddress.getLocalHost().getHostName();
@@ -54,6 +57,7 @@ class HelloworldController {
     response.put("version", version);
     response.put("hostname", hostname);
 
+    log.info("responding to {}", name);
     return response;
   }
 }
