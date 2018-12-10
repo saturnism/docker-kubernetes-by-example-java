@@ -9,6 +9,7 @@ spec:
   ports:
     # the port that this service should serve on
     - port: 3306
+      name: mysql
   # label keys and values that must match in order to receive traffic for this service
   selector: 
     app: mysql

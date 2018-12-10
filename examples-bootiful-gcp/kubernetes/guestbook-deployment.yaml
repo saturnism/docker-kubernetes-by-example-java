@@ -42,10 +42,18 @@ spec:
       containers:
       - name: guestbook-service
         image: gcr.io/wise-coyote-827/bootiful-guestbook-service:latest
-        readinessProbe:
+        livenessProbe:
+          initialDelaySeconds: 30
           httpGet:
             path: /actuator/health
             port: 8080
+        readinessProbe:
+          httpGet:
+            path: /api
+            port: 8080
+            httpHeaders:
+            - name: x-b3-sampled
+              value: "0"
         resources:
           requests:
             cpu: 0.5

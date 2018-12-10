@@ -41,7 +41,6 @@ public class HelloworldUiController {
 
   @GetMapping("/")
   public String index(HttpSession session, Model model) {
-  	log.info("starting index");
     if (model.containsAttribute("name")) {
       String name = (String) model.asMap().get("name");
       Map<String, String> greeting = helloworldService.greeting(name);

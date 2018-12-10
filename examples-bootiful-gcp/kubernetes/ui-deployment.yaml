@@ -49,10 +49,18 @@ spec:
           value: http://guestbook-service:8080
         - name: SPRING_REDIS_HOST
           value: redis
-        readinessProbe:
+        livenessProbe:
+          initialDelaySeconds: 30
           httpGet:
             path: /actuator/health
             port: 8080
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            httpHeaders:
+              - name: x-b3-sampled
+                value: "0"
         resources:
           requests:
             cpu: 0.5

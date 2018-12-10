@@ -44,6 +44,9 @@
 					<artifactId>jib-maven-plugin</artifactId>
 					<version>0.10.1</version>
 					<configuration>
+						<from>
+                            <image>gcr.io/distroless/java:debug</image>
+						</from>
 						<to>
 							<image>${docker.image.prefix}/bootiful-${project.artifactId}</image>
 						</to>

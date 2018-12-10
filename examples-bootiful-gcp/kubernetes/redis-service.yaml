@@ -25,5 +25,6 @@ spec:
   ports:
     - port: 6379
       targetPort: 6379
+      name: redis
   selector:
     app: redis
