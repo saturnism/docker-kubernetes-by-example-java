@@ -15,6 +15,8 @@
  */
 package com.example.guestbook;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -38,10 +40,12 @@ public class HelloworldApplication {
 
 @RestController
 class HelloworldController {
+  private static final Logger logger = LoggerFactory.getLogger(HelloworldController.class);
   private final String version = "1.0";
 
   @GetMapping("/hello/{name}")
   public Map<String, String> hello(@Value("${greeting}") String greetingTemplate, @PathVariable String name) throws UnknownHostException {
+    logger.info("Hello to: " + name);
     Map<String, String> response = new HashMap<>();
 
     String hostname = InetAddress.getLocalHost().getHostName();

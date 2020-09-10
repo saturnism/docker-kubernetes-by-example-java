@@ -4,7 +4,7 @@
   <include resource="org/springframework/cloud/gcp/logging/logback-json-appender.xml"/>
 
   <root level="INFO">
-    <appender-ref ref="CONSOLE"/>
+    <appender-ref ref="CONSOLE_JSON"/>
   </root>
 </configuration>
 

@@ -46,7 +46,7 @@
             </extraDirectories>
             <container>
               <environment>
-                <JAVA_TOOL_OPTIONS>-agentpath:/opt/cdbg/cdbg_java_agent.so=--logtostderr=1 -agentpath:/opt/cprof/profiler_java_agent.so=-logtostderr,-cprof_enable_heap_sampling=true,-cprof_service=${project.name},-cprof_service_version=${project.version} -Dcom.google.cdbg.module=${project.name} -Dcom.google.cdbg.version=${project.version}</JAVA_TOOL_OPTIONS>
+                <JAVA_TOOL_OPTIONS>-agentpath:/opt/cdbg/cdbg_java_agent.so -agentpath:/opt/cprof/profiler_java_agent.so=-cprof_enable_heap_sampling=true,-cprof_service=${project.name},-cprof_service_version=${project.version} -Dcom.google.cdbg.module=${project.name} -Dcom.google.cdbg.version=${project.version}</JAVA_TOOL_OPTIONS>
               </environment>
             </container>
           </configuration>

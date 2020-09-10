@@ -17,4 +17,4 @@ spring:
       globally_quoted_identifiers: true
   sleuth:
     sampler:
-      percentage: "1.0"
+      probability: 1.0
