@@ -1,40 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <target>System.out</target>
-        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-            <evaluator class="ch.qos.logback.classic.boolex.GEventEvaluator">
-                <expression>
-                    e.level.toInt() &lt; WARN.toInt()
-                </expression>
-            </evaluator>
-            <OnMismatch>DENY</OnMismatch>
-            <OnMatch>ACCEPT</OnMatch>
-        </filter>
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-            <charset>utf8</charset>
-        </encoder>
-    </appender>
-    <appender name="STDERR" class="ch.qos.logback.core.ConsoleAppender">
-        <target>System.err</target>
-        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-            <evaluator class="ch.qos.logback.classic.boolex.GEventEvaluator">
-                <expression>
-                    e.level.toInt() >= WARN.toInt()
-                </expression>
-            </evaluator>
-            <OnMismatch>DENY</OnMismatch>
-            <OnMatch>ACCEPT</OnMatch>
-        </filter>
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-            <charset>utf8</charset>
-        </encoder>
-    </appender>
-    <root level="INFO">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="STDERR" />
-    </root>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+  <include resource="org/springframework/cloud/gcp/logging/logback-json-appender.xml"/>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE"/>
+  </root>
 </configuration>
+

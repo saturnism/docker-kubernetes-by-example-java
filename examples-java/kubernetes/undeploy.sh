@@ -29,7 +29,4 @@ kubectl delete svc redis mysql
 kubectl delete deployment redis mysql
 kubectl delete pvc mysql-pvc
 
-kubectl delete deployment zipkin
-kubectl delete service zipkin
-
 #kubectl delete storageclass standard

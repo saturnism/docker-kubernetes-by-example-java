@@ -1,100 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.example.guestbook</groupId>
-	<artifactId>guestbook-example</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+  <groupId>com.example.guestbook</groupId>
+  <artifactId>guestbook-example</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
-	<name>guestbook-example</name>
-	<description>Demo project for Spring Boot</description>
+  <name>guestbook-example</name>
+  <description>Demo project for Spring Boot</description>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.3.3.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Dalston.RELEASE</spring-cloud.version>
-		<docker.image.prefix>saturnism</docker.image.prefix>
-	</properties>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <java.version>1.8</java.version>
+    <spring-cloud.version>Hoxton.SR7</spring-cloud.version>
+    <docker.image.prefix>saturnism</docker.image.prefix>
+  </properties>
 
-    <build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<artifactId>maven-jar-plugin</artifactId>
-					<configuration>
-						<archive>
-							<manifest>
-								<addClasspath>true</addClasspath>
-								<classpathPrefix>lib/</classpathPrefix>
-							</manifest>
-						</archive>
-					</configuration>
-				</plugin>
-				<plugin>
-					<artifactId>maven-dependency-plugin</artifactId>
-					<executions>
-						<execution>
-							<phase>initialize</phase>
-							<goals>
-								<goal>copy-dependencies</goal>
-							</goals>
-							<configuration>
-								<overWriteReleases>false</overWriteReleases>
-								<includeScope>runtime</includeScope>
-								<outputDirectory>${project.build.directory}/lib</outputDirectory>
-							</configuration>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>com.spotify</groupId>
-					<artifactId>dockerfile-maven-plugin</artifactId>
-					<version>1.2.2</version>
-					<configuration>
-						<repository>${docker.image.prefix}/${project.artifactId}</repository>
-                        <tag>latest</tag>
-					</configuration>
-					<executions>
-						<execution>
-							<phase>package</phase>
-							<goals>
-								<goal>build</goal>
-							</goals>
-						</execution>
-					</executions>
-				</plugin>
-				<plugin>
-					<groupId>pl.project13.maven</groupId>
-					<artifactId>git-commit-id-plugin</artifactId>
-					<version>2.1.15</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>revision</goal>
-							</goals>
-						</execution>
-					</executions>
-					<configuration>
-						<dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>com.google.cloud.tools</groupId>
+          <artifactId>jib-maven-plugin</artifactId>
+          <version>2.4.0</version>
+          <configuration>
+            <from>
+              <image>adoptopenjdk:8-hotspot</image>
+            </from>
+            <to>
+              <image>${docker.image.prefix}/${project.artifactId}</image>
+            </to>
+            <extraDirectories>
+              <paths>${project.parent.basedir}/src/main/jib</paths>
+            </extraDirectories>
+            <container>
+              <environment>
+                <JAVA_TOOL_OPTIONS>-agentpath:/opt/cdbg/cdbg_java_agent.so=--logtostderr=1 -agentpath:/opt/cprof/profiler_java_agent.so=-logtostderr,-cprof_enable_heap_sampling=true,-cprof_service=${project.name},-cprof_service_version=${project.version} -Dcom.google.cdbg.module=${project.name} -Dcom.google.cdbg.version=${project.version}</JAVA_TOOL_OPTIONS>
+              </environment>
+            </container>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>pl.project13.maven</groupId>
+          <artifactId>git-commit-id-plugin</artifactId>
+          <version>2.1.15</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>revision</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 
-	<modules>
-		<module>helloworld-service</module>
-		<module>guestbook-service</module>
-		<module>helloworld-ui</module>
-	</modules>
+  <modules>
+    <module>helloworld-service</module>
+    <module>guestbook-service</module>
+    <module>helloworld-ui</module>
+  </modules>
 </project>

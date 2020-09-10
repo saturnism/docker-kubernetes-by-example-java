@@ -17,7 +17,6 @@
 
 kubectl apply -f mysql-pvc.yaml -f mysql-deployment.yaml -f mysql-service.yaml --record
 kubectl apply -f redis-deployment.yaml -f redis-service.yaml --record
-kubectl apply -f zipkin-deployment.yaml -f zipkin-service.yaml --record
 kubectl apply -f helloworld-deployment.yaml -f helloworld-service.yaml --record
 kubectl apply -f guestbook-deployment.yaml -f guestbook-service.yaml --record
 kubectl apply -f ui-deployment.yaml -f ui-service.yaml --record

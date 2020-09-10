@@ -21,6 +21,8 @@ metadata:
   labels:
     app: guestbook-service
     visualize: "true"
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   ports:
     - port: 8080

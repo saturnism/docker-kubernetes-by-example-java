@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mysql
@@ -7,6 +7,9 @@ metadata:
     visualize: "true"
 spec: 
   replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
   template:
     metadata:
       labels: 
@@ -15,10 +18,10 @@ spec:
     spec:
       containers: 
       - name: mysql
-        image: mysql:5.6
+        image: mysql:8
         resources:
           limits :
-            cpu: 0.5
+            cpu: 500m
         env:
         - name: MYSQL_ROOT_PASSWORD
           # change this

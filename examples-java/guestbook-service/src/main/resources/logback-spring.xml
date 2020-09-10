@@ -1,0 +1,8 @@
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+  <include resource="org/springframework/cloud/gcp/logging/logback-json-appender.xml"/>
+
+  <root level="INFO">
+    <appender-ref ref="CONSOLE_JSON"/>
+  </root>
+</configuration>
