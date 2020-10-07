@@ -22,7 +22,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <jkube.version>1.0.0-rc-1</jkube.version>
+        <jkube.version>1.0.1</jkube.version>
         <!-- In order to expose 8080 as service port -->
         <jkube.enricher.jkube-service.port>8080</jkube.enricher.jkube-service.port>
         <!-- In order to get Service of type NodePort, default is ClusterIP -->

@@ -35,7 +35,7 @@ image for the project using `k8s:build` goal:
 [INFO] Building helloworld-service 0.1-opt-4
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
-[INFO] --- kubernetes-maven-plugin:1.0.0-rc-1:build (default-cli) @ helloworld-service ---
+[INFO] --- kubernetes-maven-plugin:1.0.1:build (default-cli) @ helloworld-service ---
 [INFO] k8s: Running in Kubernetes mode
 [INFO] k8s: Building Docker image in Kubernetes mode
 [INFO] k8s: [examples/helloworld-service:0.1-opt-4]: Created docker-build.tar in 3 seconds
@@ -80,7 +80,7 @@ for us:
 [INFO] Building helloworld-service 0.1-opt-4
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
-[INFO] --- kubernetes-maven-plugin:1.0.0-rc-1:resource (default-cli) @ helloworld-service ---
+[INFO] --- kubernetes-maven-plugin:1.0.1:resource (default-cli) @ helloworld-service ---
 [INFO] k8s: jkube-controller: Adding a default Deployment
 [INFO] k8s: jkube-service: Adding a default service 'helloworld-service' with ports [8080]
 [INFO] k8s: jkube-revision-history: Adding revision history limit to 2
@@ -110,7 +110,7 @@ We would only need to issue `k8s:deploy` or `k8s:apply` goal:
 [INFO] Building helloworld-service 0.1-opt-4
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO] 
-[INFO] --- kubernetes-maven-plugin:1.0.0-rc-1:apply (default-cli) @ helloworld-service ---
+[INFO] --- kubernetes-maven-plugin:1.0.1:apply (default-cli) @ helloworld-service ---
 [INFO] k8s: Using Kubernetes at https://192.168.39.145:8443/ in namespace default with manifest /home/rohaan/work/repos/docker-kubernetes-by-example-java/examples/helloworld-service-opt-4/target/classes/META-INF/jkube/kubernetes.yml 
 [INFO] k8s: Using namespace: default
 [INFO] k8s: Creating a Service from kubernetes.yml namespace default name helloworld-service
@@ -150,7 +150,7 @@ Once you're done, you can undeploy your application from Kubenetes Cluster using
 [INFO] Building helloworld-service 0.1-opt-4
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
-[INFO] --- kubernetes-maven-plugin:1.0.0-rc-1:undeploy (default-cli) @ helloworld-service ---
+[INFO] --- kubernetes-maven-plugin:1.0.1:undeploy (default-cli) @ helloworld-service ---
 [INFO] k8s: Using Kubernetes at https://192.168.39.145:8443/ in namespace default with manifest /home/rohaan/work/repos/docker-kubernetes-by-example-java/examples/helloworld-service-opt-4/target/classes/META-INF/jkube/kubernetes.yml
 [INFO] k8s: Using namespace: default
 [INFO] k8s: Deleting resource Deployment default/helloworld-service
