@@ -11,4 +11,4 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-FROM saturnism/spring-boot:1.2.3-jdk-8-groovy-2.4.3-onbuild
+FROM saturnism/spring-boot:1.2.3-jdk-8-groovy-2.4.3-onbuild@sha256:959654a406a98d71197bea48dd9e177d661d588af2f5439ff8b28e7f11065045
